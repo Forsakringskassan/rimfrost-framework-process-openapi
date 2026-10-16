@@ -1,0 +1,135 @@
+openapi: 3.1.0
+info:
+  title: Process API
+  version: 1.0.0
+  description: >
+    Gemensamt API för processer i Rimfrost.
+    Innehåller endpoints som är identiska för alla processer och implementeras i rimfrost-framework-process.
+
+security:
+  - bearerAuth: []
+
+paths:
+  /processvy/steg:
+    get:
+      tags: [ProcessvyController]
+      operationId: getProcessvySteg
+      summary: Hämta processens steg
+      description: >
+        Returnerar processens steg i ordning, enligt processens processbeskrivning.
+        Steget som innehåller aktiviteten är PAGAR, tidigare steg är KLAR och senare steg är KOMMANDE.
+      parameters:
+        - name: aktivitetId
+          in: query
+          required: true
+          description: ID för aktiviteten i processen som uppgiften skapades i
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Processens steg
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetProcessvyStegResponse"
+        "400":
+          description: Aktivitets-ID saknas eller är ogiltigt
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Ej autentiserad
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Åtkomst nekad
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Aktivitets-ID:t finns inte i processbeskrivningen
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer-token utfärdat av identitetsleverantören.
+
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          description: HTTP-statuskod
+          example: 404
+        message:
+          type: string
+          description: Beskrivning av felet
+          example: Aktiviteten finns inte i processbeskrivningen
+
+    GetProcessvyStegResponse:
+      type: object
+      required:
+        - processId
+        - processnamn
+        - steg
+      properties:
+        processId:
+          type: string
+          description: Processens ID, samma som i BPMN-filen
+          example: vah
+        processnamn:
+          type: string
+          description: Processens namn så som det visas för handläggaren
+          example: Vård av husdjur
+        steg:
+          type: array
+          description: Processens steg i ordning
+          items:
+            $ref: "#/components/schemas/ProcessSteg"
+
+    ProcessSteg:
+      type: object
+      required:
+        - id
+        - rubrik
+        - status
+      properties:
+        id:
+          type: string
+          description: Stegets ID i processbeskrivningen
+          example: kontrollera-ratt-till-forsakring
+        rubrik:
+          type: string
+          description: Stegets rubrik så som den visas för handläggaren
+          example: Kontrollera rätt till försäkring
+        beskrivning:
+          type: string
+          description: Valfri beskrivning av steget
+          example: Handläggaren kontrollerar att den försäkrade har rätt till ersättning.
+        status:
+          $ref: "#/components/schemas/StegStatus"
+
+    StegStatus:
+      type: string
+      description: >
+        Stegets status i förhållande till aktiviteten.
+        KLAR = steget ligger före aktivitetens steg, PAGAR = steget innehåller aktiviteten, KOMMANDE = steget ligger efter aktivitetens steg.
+      enum:
+        - KLAR
+        - PAGAR
+        - KOMMANDE
