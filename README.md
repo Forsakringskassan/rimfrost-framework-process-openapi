@@ -5,7 +5,7 @@ Contains endpoints that are identical regardless of the process. They are implem
 
 ## Endpoints
 
-- `GET /processvy/steg?aktivitetId={uuid}` — the process's steps in order, with status `KLAR`, `PAGAR` or `KOMMANDE` relative to the step that contains the activity. Responds `404` if the activity is not in the process description.
+- `GET /processvy/steg?aktivitetId={uuid}` — the process's steps in order, with status `KLAR`, `PAGAR` or `KOMMANDE` relative to the step that contains the activity. Responds `404` if the activity is not in the process description, or if the process has no process description (the processvy is optional).
 
 ## Artifacts
 

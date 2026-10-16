@@ -18,6 +18,7 @@ paths:
       description: >
         Returnerar processens steg i ordning, enligt processens processbeskrivning.
         Steget som innehåller aktiviteten är PAGAR, tidigare steg är KLAR och senare steg är KOMMANDE.
+        Processvyn är valfri: en process utan processbeskrivning svarar 404.
       parameters:
         - name: aktivitetId
           in: query
@@ -52,7 +53,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "404":
-          description: Aktivitets-ID:t finns inte i processbeskrivningen
+          description: Aktivitets-ID:t finns inte i processbeskrivningen, eller processen har ingen processbeskrivning
           content:
             application/json:
               schema:
