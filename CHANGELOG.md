@@ -1,3 +1,22 @@
+## 1.1.0 (2026-11-03)
+
+### Features
+
+-  add optional nested steg to ProcessSteg (FKPOC-1305) ([b4e91](https://github.com/Forsakringskassan/rimfrost-framework-process-openapi/commit/b4e9118fea59718) LisaWedin_Ductus)  
+
+### Bug Fixes
+
+-  clarify nesting depth of steg (FKPOC-1305) ([7b214](https://github.com/Forsakringskassan/rimfrost-framework-process-openapi/commit/7b214d7062a1c6d) LisaWedin_Ductus)  
+
+### Other changes
+
+**Update openapi.yaml**
+
+* Co-authored-by: Ulf Slunga &lt;98820233+UlfSlunga-Sinetiq@users.noreply.github.com&gt; 
+
+[8c50d](https://github.com/Forsakringskassan/rimfrost-framework-process-openapi/commit/8c50def290470a3) LisaWedin-Ductus *2026-11-03 13:39:46*
+
+
 # rimfrost-framework-process-openapi changelog
 
 Changelog of rimfrost-framework-process-openapi.
