@@ -18,7 +18,7 @@ paths:
       description: >
         Returnerar processens steg i ordning, enligt processens processbeskrivning.
         Steget som innehåller aktiviteten är PAGAR, tidigare steg är KLAR och senare steg är KOMMANDE.
-        Ett steg kan ha understeg i fältet `steg`, högst två nivåer under svarets `steg[]`.
+        Ett steg kan ha understeg i fältet `steg`, och ett understeg kan i sin tur ha understeg. Djupare än så förekommer inte.
         Processvyn är valfri: en process utan processbeskrivning svarar 404.
       parameters:
         - name: aktivitetId
@@ -129,7 +129,7 @@ components:
           type: array
           description: >
             Valfria understeg i ordning, med samma form som steget.
-            Förekommer högst två nivåer under svarets `steg[]`.
+            Ett steg i svarets `steg[]` kan ha understeg, och dessa kan i sin tur ha understeg. Djupare än så förekommer inte.
             Fältet saknas när steget inte har några understeg.
           items:
             $ref: "#/components/schemas/ProcessSteg"
