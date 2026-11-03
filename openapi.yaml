@@ -127,6 +127,7 @@ components:
           $ref: "#/components/schemas/StegStatus"
         steg:
           type: array
+          minItems: 1
           description: >
             Valfria understeg i ordning, med samma form som steget.
             Ett steg i svarets `steg[]` kan ha understeg, och dessa kan i sin tur ha understeg. Djupare än så förekommer inte.
